@@ -1,24 +1,23 @@
 
 function inputs(userData, setUserData, defaultValues){
     let inputs = []
-    for (let index = 0; index < defaultValues.length; index += 2) {
-        const key1 = defaultValues[index][0].toLowerCase() + defaultValues[index].slice(1).replace(/\s+/g, '');
-        const key2 = defaultValues[index+1][0].toLowerCase() + defaultValues[index+1].slice(1).replace(/\s+/g, '')
+    for (let row = 0; row < defaultValues.length; row += 2) {
+        let subinputs = []
+        for (let col = 0; col < 2; col += 1) {
+            const key = defaultValues[row+col][0].toLowerCase() + defaultValues[row+col].slice(1).replace(/\s+/g, '');
+            subinputs.push(
+                <div key={row.toString()+"_"+(col).toString()}>
+                    <label htmlFor="amount">{defaultValues[row]}</label>
+                    <input type="number" id={key} value={userData[key]} onChange={e =>
+                        setUserData({...userData, [key]: +e.target.value})
+                    } />
+                </div>
+            )
+        }
 
         inputs.push(
-            <div className="input-group" key={index}>
-                <div>
-                    <label htmlFor="amount">{defaultValues[index]}</label>
-                    <input type="number" id={key1} value={userData[key1]} onChange={e =>
-                        setUserData({...userData, [key1]: +e.target.value})
-                    } />
-                </div>
-                <div>
-                    <label htmlFor="amount">{defaultValues[index+1]}</label>
-                    <input type="number" id={key2} value={userData[key2]} onChange={e =>
-                        setUserData({...userData, [key2]: +e.target.value})
-                    } />
-                </div>
+            <div className="input-group" key={row}>
+                {subinputs.map((columna) => (columna))}
             </div>
         )
     }

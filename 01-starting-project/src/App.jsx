@@ -19,11 +19,14 @@ function App() {
     duration: 10
   });
 
+  const inputIsValid = userData.duration > 0;
+
   return (
     <>
       <Header />
       <UserInputs userData={userData} setUserData={setUserData} defaultValues={defaultValues} />
-      <Results userData={userData} defaultValues={defaultValues} />
+      {!inputIsValid && <p className="center">Please enter a duration greator than zero.</p>}
+      {inputIsValid &&<Results userData={userData} defaultValues={defaultValues} />}
     </>
   )
 }
